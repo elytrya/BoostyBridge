@@ -3,11 +3,13 @@ C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\api\
 C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\api\managers\AuthManager.java
 C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\api\managers\BlogManager.java
 C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\api\managers\BoostyDMManager.java
+C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\api\managers\DiscordBotManager.java
 C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\api\managers\DiscordManager.java
 C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\api\managers\MessageManager.java
 C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\BoostyBridge.java
 C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\commands\BoostyCommand.java
 C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\commands\subcommands\AdminSubCommand.java
+C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\commands\subcommands\DiscordSubCommand.java
 C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\commands\subcommands\ForceSyncSubCommand.java
 C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\commands\subcommands\InfoSubCommand.java
 C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\commands\subcommands\LinkSubCommand.java

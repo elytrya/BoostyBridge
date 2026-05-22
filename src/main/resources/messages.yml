@@ -1,10 +1,10 @@
-
 # support: hex
 
 #general
 prefix: "&#FFB6C1[BoostyBridge] &f"
 no_permission: "&fУ вас нет прав для выполнения этой команды!"
 unknown_command: "&fНеизвестная подкоманда. Используйте &#FFB6C1/boosty reload"
+only_players: "&cЭта команда доступна только для игроков!"
 
 # /boosty reload
 reload_success: "&fКонфигурация и токены успешно обновлены!"
@@ -15,33 +15,51 @@ help_menu:
   - "&f--- &#FFB6C1Помощь по BoostyBridge &f---"
   - "&#FFB6C1/boosty link <ник> &f- Привязать аккаунт"
   - "&#FFB6C1/boosty info &f- Информация о вашей привязке"
+  - "&#FFB6C1/boosty discord <юзернейм> &f- Привязать ваш Discord"
 help_menu_admin:
   - "&#FFB6C1/boosty admin &f- Команды администратора"
 
 # /boosty link
 link_usage: "&fИспользование: &#FFB6C1/boosty link <ник_на_бусти>"
+link_fetching_data: "&aПроверка подписки на Boosty..."
 link_success: "&fВаш аккаунт успешно привязан к Boosty: &#FFB6C1%name%"
 link_not_found: "&fПользователь с ником &#FFB6C1%name% &fне найден в списке подписчиков бусти."
 link_already_linked: "&fЭтот аккаунт Boosty уже привязан к другому игроку!"
 link_already_yours: "&fВы уже привязали свой аккаунт!"
 link_error: "&fОшибка при проверке подписки."
-link_dm_prompt: "&fКод подтверждения отправлен вам в личные сообщения на Boosty. Введите его в чат."
-link_email_prompt: "&fЭтот аккаунт привязан к почте. Напишите её в чат для подтверждения (у вас 60 секунд):"
-link_email_fail: "&fПочта указана неверно. Привязка &#FFB6C1отменена&f."
-
+link_dm_required: "&fДля завершения привязки введите код, отправленный вам в ЛС на Boosty!"
+link_email_fail: "&cНеверный код подтверждения!"
 
 # /boosty info
-info_linked: "&fВаш аккаунт привязан к Boosty: &#FFB6C1%boosty% &f(Подписка: &#FFB6C1%level%&f)"
-info_not_linked: "&fУ вас нет привязанного аккаунта Boosty."
+info_usage: "&fИспользование: &#FFB6C1/boosty info"
+info_not_linked: "&fВы еще &#FFB6C1не привязали &fсвой аккаунт. Используйте &#FFB6C1/boosty link <ник>"
+info_format:
+  - "&f--- &#FFB6C1Ваша привязка &f---"
+  - "&fИгрок: &#FFB6C1%player%"
+  - "&fBoosty: &#FFB6C1%boosty%"
+  - "&fУровень: &#FFB6C1%level%"
+
+# /boosty discord
+discord_usage: "&cИспользование: &#FFB6C1/boosty discord <ваш_discord_юзернейм>"
+discord_checking: "&fПопытка привязки Discord аккаунта: &#FFB6C1%discord_tag%&f"
+discord_success: "&aDiscord аккаунт &#FFB6C1%discord_tag% &aуспешно подтверждён на сервере!"
+discord_not_found: "&cНе удалось найти пользователя &e%discord_tag% &cна нашем Discord сервере. Убедитесь, что вы зашли на сервер и верно указали ник (не отображаемое имя, а уникальный юзернейм)!"
+discord_error: "&cПроизошла внутренняя ошибка при привязке Discord."
+discord_already_linked: "&cВы уже привязали Discord аккаунт к вашему профилю Minecraft! Перепривязка невозможна."
 
 # /boosty admin
+error_use_admin: "&cНеверное использование команды администратора."
+admin_usage_unlink: "&fИспользование: &#FFB6C1/boosty admin unlink <игрок> [-s]"
+admin_usage_info: "&fИспользование: &#FFB6C1/boosty admin info <игрок>"
+admin_usage_forcelink: "&fИспользование: &#FFB6C1/boosty admin forcelink <игрок> <бусти_ник> <уровень> [-s]"
+admin_usage_setdiscord: "&fИспользование: &#FFB6C1/boosty admin setdiscord <игрок> <discord_username>"
+
+admin_player_not_found: "&cИгрок не найден в базе данных."
 admin_unlink_success: "&fАккаунт игрока &#FFB6C1%player% &fуспешно отвязан."
-admin_unlink_not_linked: "&fИгрок &#FFB6C1%player% &fне имеет привязки."
-admin_info_linked: "&fИгрок: &#FFB6C1%player%&f\nBoosty: &#FFB6C1%boosty%&f\nПодписка: &#FFB6C1%level%"
-admin_info_not_linked: "&fИгрок &#FFB6C1%player% &fне имеет привязки."
-admin_forcelink_success: "&fАккаунт &#FFB6C1%boosty% &fпринудительно привязан к &#FFB6C1%player%&f."
+admin_setdiscord_success: "&fDiscord-ник игрока &#FFB6C1%player% &fизменен на &#FFB6C1%discord%&f."
 
 #/boosty admin forcelink
+admin_forcelink_success: "&fАккаунт &#FFB6C1%boosty% &fпринудительно привязан к &#FFB6C1%player%&f."
 admin_forcesync_started: "&fЗапуск &#FFB6C1принудительной &fсинхронизации всех игроков..."
 admin_forcesync_async: "&fПроцесс запущен &#FFB6C1асинхронно. &fПроверьте консоль для деталей."
 
@@ -56,10 +74,29 @@ congratulation_message:
   - " &fУровень подписки: &#FFB6C1{level_name}"
   - "&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"
 
+discord:
+  role-given-embed:
+    color: "#FFB6C1"
+    title: "Выдача роли Discord"
+    description: "Роль **{role_name}** успешно выдана игроку **{player}**."
+    fields:
+      - name: "Подписка"
+        value: "**{level_name}**"
+        inline: true
+      - name: "Аккаунт"
+        value: "{ping}"
+        inline: true
+    footer: "elytrya | github.com/elytrya/BoostyBridge"
 
-#errors
-error_not_found: "&cНеизвестная команда или недостаточно прав."
-error_use_admin: "&cИспользование: /boosty admin <unlink|info|forcelink|forcesync>"
-error_use_unlink: "&cИспользование: &#FFB6C1/boosty admin unlink <ник> [-s]"
-error_use_info: "&cИспользование: /boosty admin info <игрок>"
-error_use_forcelink: "&cИспользование: /boosty admin forcelink <игрок> <boosty_name>"
+  role-removed-embed:
+    color: "#FF0000"
+    title: "Снятие роли Discord"
+    description: "Роль **{role_name}** была удалена у игрока **{player}**."
+    fields:
+      - name: "Причина"
+        value: "Окончание или изменение подписки"
+        inline: false
+      - name: "Аккаунт"
+        value: "{ping}"
+        inline: true
+    footer: "elytrya | github.com/elytrya/BoostyBridge"

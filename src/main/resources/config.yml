@@ -4,7 +4,7 @@ auth:
   # 1. Log in to boosty.to using your account.
   # 2. Press F12 (Developer Tools) and go to the "Storage" tab.
   # 3. In the left menu, find the section "Local Storage" -> "https://boosty.to".
-  # 4. In the list, find the key "auth" and copy its entire value 
+  # 4. In the list, find the key "auth" and copy its entire value
   #    (it starts with {%22accessToken%22...). Paste this value into the auth_data field.
   # 5. In the same place, find the key "_clientId" and copy its value into the client_id field.
   # https://ibb.co/DHTK13NQ
@@ -15,17 +15,15 @@ auth:
   # 1. Зайдите на boosty.to под своим аккаунтом.
   # 2. Нажмите F12 (Инструменты разработчика) и перейдите во вкладку "Storage".
   # 3. Слева в меню найдите раздел "Local Storage" -> "https://boosty.to".
-  # 4. В списке найдите ключ "auth" и скопируйте его значение целиком 
+  # 4. В списке найдите ключ "auth" и скопируйте его значение целиком
   #    (оно начинается с {%22accessToken%22...). Вставьте это значение в поле auth_data.
   # 5. Там же найдите ключ "_clientId" и скопируйте его значение в поле client_id.
-  # https://ibb.co/DHTK13NQ 
+  # https://ibb.co/DHTK13NQ
   # ВАЖНО: НИКОМУ НЕ ПЕРЕДАВАЙТЕ ЭТИ ДАННЫЕ!!!!
 
-  auth_data: '{%22accessToken%22:%22YOUR_ACCESS_TOKEN%22%2C%22refreshToken%22:%22YOUR_REFRESH_TOKEN%22%2C%22expiresAt%22:1234567890000%2C%22isNewUser%22:false}' # replace!!
-  client_id: 'YOUR_CLIENT_ID' # replace!!
+  auth_data: "{%22accessToken%22:%22YOUR_ACCESS_TOKEN%22%2C%22refreshToken%22:%22YOUR_REFRESH_TOKEN%22%2C%22expiresAt%22:1234567890000%2C%22isNewUser%22:false}" # replace!!
+  client_id: "YOUR_CLIENT_ID" # replace!!
 # ---
-
-
 
 database:
   type: "SQLITE" # or MYSQL
@@ -35,7 +33,6 @@ database:
     database: "boosty"
     username: "root"
     password: "password"
-
 
 rewards:
   "Спонсор +":
@@ -51,25 +48,41 @@ rewards:
     take:
       - "say %player% перестал отслеживать блог!"
 
-sync: 
+sync:
   # Интервал синхронизации активных подписок (в минутах)
   # Active subscriptions synchronization interval (in minutes)
-  interval_minutes: 60   
+  interval_minutes: 60
 
-# Discord Webhooks
 discord:
-  enabled: false
-  webhook_url: "вебхук" # вставьте сюда свою ссылочку!
-  embed_color: "#FFB6C1"
-  
+  enabled: true
+  bot_token: MTM4Nzg1ODE4NTg1MDk4MjQ2MQ.G1UDkV.dU7YtnCS386vp5U21j4A6Ci7U2SzwgoKqUBhTM # Bot token from discord.com/developers
+  guild_id: '1487451822720422088' # Right-click your server => Copy Server ID
+  channel_id: '1498328968472821880' # channel id
+  embed_color: '#FFB6C1'
+
+  # Пример:
+  #   "Спонсор +": "123456789012345678"
+  #   "VIP":       "987654321098765432"
+  roles:
+    Follower: '1501541047279292508'
+
   subscription:
     enabled: true
-    title: "🚀 Новая подписка"
-    message: "Игрок **{player}** привязал Boosty: **{boosty_name}** (Уровень: **{level}**)"
+    title: Новая подписка
+    message: 'Игрок **{player}** привязал Boosty: **{boosty_name}** (Уровень: **{level}**)'
   unsubscription:
     enabled: true
-    title: "🥀 Подписка истекла"
-    message: "У игрока **{player}** закончилась подписка уровня **{level}**"
+    title: Подписка истекла
+    message: У игрока **{player}** закончилась подписка уровня **{level}**
+  admin_forcelink:
+    enabled: true
+    title: Принудительная привязка
+    message: 'Администратор принудительно привязал **{player}** к **{boosty_name}**
+      (Уровень: **{level}**)'
+  admin_unlink:
+    enabled: true
+    title: Принудительная отвязка
+    message: Администратор отвязал игрока **{player}** от Boosty
 
   # исп. флаг -s, чтобы событие отправилось как обычное (истечение / новая подписка)
   # напр.: /boosty admin unlink elytrya -s => 🥀 Подписка истекла (unsubscription)
@@ -82,9 +95,6 @@ discord:
     enabled: true
     title: "🛠️ Принудительная отвязка"
     message: "Администратор отвязал игрока **{player}** от Boosty"
- 
-
-
 
 # отправка кода подтверждения в личные сообщения бусти
 # пользователю приходит сообщение с кодом, который он должен ввести в чат на сервере
@@ -103,7 +113,7 @@ dm_verification:
 # проверять ли email пользователя (если он известен)
 # если включено, email будет использоваться как резервный способ (fallback),
 # если не удалось отправить сообщение в личные сообщения Boosty.
-verify_email: true 
+verify_email: true
 
 debug: false
 bstats: true # bStats metrics

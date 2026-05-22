@@ -9,6 +9,7 @@ onevnl\ru\elytrya\BoostyBridge.class
 onevnl\ru\elytrya\api\managers\DiscordManager.class
 onevnl\ru\elytrya\commands\subcommands\AdminSubCommand.class
 onevnl\ru\elytrya\api\managers\BoostyDMManager.class
+onevnl\ru\elytrya\commands\subcommands\DiscordSubCommand.class
 onevnl\ru\elytrya\commands\subcommands\InfoSubCommand.class
 onevnl\ru\elytrya\hooks\PlaceholderProcessor.class
 onevnl\ru\elytrya\database\MySQL.class
@@ -16,6 +17,7 @@ onevnl\ru\elytrya\api\managers\BlogManager.class
 onevnl\ru\elytrya\commands\subcommands\ForceSyncSubCommand.class
 onevnl\ru\elytrya\commands\subcommands\SubCommand.class
 onevnl\ru\elytrya\models\PendingLink.class
+onevnl\ru\elytrya\api\managers\DiscordBotManager.class
 onevnl\ru\elytrya\tasks\SubscriptionSyncTask.class
 onevnl\ru\elytrya\api\managers\MessageManager.class
 onevnl\ru\elytrya\database\SQLite.class

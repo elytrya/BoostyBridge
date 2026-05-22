@@ -1,5 +1,5 @@
 main: onevnl.ru.elytrya.BoostyBridge
-version: b0.2
+version: b0.3
 name: BoostyBridge
 author: elytrya
 api-version: 1.21
@@ -17,6 +17,9 @@ permissions:
   boosty.info:
     description: /boosty info - инфо
     default: true
+  boosty.discord:
+    description: /boosty discord - привязка Discord аккаунта для получения ролей
+    default: true
   boosty.reload:
     description: /boosty reload - релоад плагина
     default: op
@@ -30,7 +33,7 @@ permissions:
     description: /boosty admin forcelink - админ, привязка аккаунта
     default: op
   boosty.admin.forcesync:
-    description: /boosty admin forcesync - админ, синхорнизация 
+    description: /boosty admin forcesync - админ, синхорнизация
     default: op
   boosty.admin.*:
     description: /boosty admin *
