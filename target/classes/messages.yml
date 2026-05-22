@@ -62,8 +62,11 @@ admin_setdiscord_success: "&fDiscord аккаунт для игрока &#FFB6C1
 
 #/boosty admin forcelink
 admin_forcelink_success: "&fАккаунт &#FFB6C1%boosty% &fпринудительно привязан к &#FFB6C1%player%&f."
+
+#/boosty admin forcesync
 admin_forcesync_started: "&fЗапуск &#FFB6C1принудительной &fсинхронизации всех игроков..."
 admin_forcesync_async: "&fПроцесс запущен &#FFB6C1асинхронно. &fПроверьте консоль для деталей."
+admin_forcesync_success: "&fПринудительная синхронизация базы успешно завершена."
 
 # notify
 admin_notify_unlinked: "&fАдминистратор &#FFB6C1%admin% &fотвязал ваш аккаунт Boosty."
@@ -88,7 +91,7 @@ discord:
       - name: "Аккаунт"
         value: "{ping}"
         inline: true
-    footer: "[boostybridge](https://github.com/elytrya/BoostyBridge)"
+    footer: "elytrya | github.com/elytrya/boostybridge"
 
   role-removed-embed:
     color: "#FF0000"
@@ -101,7 +104,7 @@ discord:
       - name: "Аккаунт"
         value: "{ping}"
         inline: true
-    footer: "[boostybridge](https://github.com/elytrya/BoostyBridge)"
+    footer: "elytrya | github.com/elytrya/boostybridge"
 
 # errors
 error_not_found: "&cНеизвестная команда или недостаточно прав."

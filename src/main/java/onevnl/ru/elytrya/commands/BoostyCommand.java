@@ -28,11 +28,6 @@ public class BoostyCommand implements CommandExecutor, TabCompleter {
     registerSubCommand(new InfoSubCommand(client));
     registerSubCommand(new AdminSubCommand(client));
     registerSubCommand(new DiscordSubCommand(client));
-
-    Bukkit.getLogger().info(
-      "[BoostyBridge] Command initialized. Discord enabled status: " +
-        isDiscordEnabled()
-    );
   }
 
   private void registerSubCommand(SubCommand cmd) {
@@ -63,26 +58,25 @@ public class BoostyCommand implements CommandExecutor, TabCompleter {
     boolean discordEnabled = isDiscordEnabled();
 
     if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
-      List<String> helpLines = msg.getMessageList("help_menu");
-      for (String line : helpLines) {
-        if (
-          !discordEnabled &&
-          (line.contains("/boosty discord") || line.contains("discord"))
-        ) {
-          continue;
+      List<String> lines = msg.getMessageList("help_menu");
+      if (lines != null) {
+        for (String line : lines) {
+          if (
+            !discordEnabled &&
+            (line.contains("/boosty discord") || line.contains("discord"))
+          ) {
+            continue;
+          }
+          sender.sendMessage(line);
         }
-        sender.sendMessage(line);
       }
 
-      if (
-        sender.hasPermission("boosty.admin.unlink") ||
-        sender.hasPermission("boosty.admin.info") ||
-        sender.hasPermission("boosty.admin.forcelink") ||
-        sender.hasPermission("boosty.admin.forcesync")
-      ) {
-        List<String> adminHelp = msg.getMessageList("help_menu_admin");
-        for (String line : adminHelp) {
-          sender.sendMessage(line);
+      if (sender.hasPermission("boosty.admin.*")) {
+        List<String> adminLines = msg.getMessageList("help_menu_admin");
+        if (adminLines != null) {
+          for (String line : adminLines) {
+            sender.sendMessage(line);
+          }
         }
       }
       return true;
@@ -162,27 +156,28 @@ public class BoostyCommand implements CommandExecutor, TabCompleter {
   ) {
     if (args.length == 2) {
       String input = args[1].toLowerCase();
-
-      List<String> adminActions = new ArrayList<>();
-      adminActions.add("unlink");
-      adminActions.add("info");
-      adminActions.add("forcelink");
-      adminActions.add("forcesync");
-      if (discordEnabled) {
-        adminActions.add("setdiscord");
-      }
+      String[] adminActions = {
+        "unlink",
+        "info",
+        "forcelink",
+        "forcesync",
+        "setdiscord",
+      };
 
       for (String s : adminActions) {
+        if (s.equals("setdiscord") && !discordEnabled) continue;
+
         if (s.startsWith(input) && sender.hasPermission("boosty.admin." + s)) {
           list.add(s);
         }
       }
     } else if (args.length == 3) {
-      handlePlayerTab(list, args, discordEnabled);
+      handlePlayerTab(sender, list, args, discordEnabled);
     }
   }
 
   private void handlePlayerTab(
+    CommandSender sender,
     List<String> list,
     String[] args,
     boolean discordEnabled
@@ -194,21 +189,13 @@ public class BoostyCommand implements CommandExecutor, TabCompleter {
       sub.equals("unlink") || sub.equals("info") || sub.equals("setdiscord")
     ) {
       if (sub.equals("setdiscord") && !discordEnabled) return;
+      if (!sender.hasPermission("boosty.admin." + sub)) return;
 
       client
         .getDatabase()
         .getAllUsers()
         .stream()
         .map(BoostyUser::playerName)
-        .filter(n -> n.toLowerCase().startsWith(input))
-        .forEach(list::add);
-    } else if (sub.equals("forcelink")) {
-      client
-        .getPlugin()
-        .getServer()
-        .getOnlinePlayers()
-        .stream()
-        .map(Player::getName)
         .filter(n -> n.toLowerCase().startsWith(input))
         .forEach(list::add);
     }

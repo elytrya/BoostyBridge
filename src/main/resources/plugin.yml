@@ -35,6 +35,9 @@ permissions:
   boosty.admin.forcesync:
     description: /boosty admin forcesync - админ, синхорнизация
     default: op
+  boosty.admin.setdiscord:
+    description: "/boosty admin setdiscord - админ, сет дискорда"
+    default: op
   boosty.admin.*:
     description: /boosty admin *
     default: op
@@ -44,6 +47,7 @@ permissions:
       boosty.admin.info: true
       boosty.admin.forcelink: true
       boosty.admin.forcesync: true
+      boosty.admin.setdiscord: true
   boosty.*:
     description: все права
     default: op
