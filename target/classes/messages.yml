@@ -4,13 +4,13 @@
 prefix: "&#FFB6C1[BoostyBridge] &f"
 no_permission: "&fУ вас нет прав для выполнения этой команды!"
 unknown_command: "&fНеизвестная подкоманда. Используйте &#FFB6C1/boosty reload"
-only_players: "&cЭта команда доступна только для игроков!"
+only_players: "&fЭта команда доступна только для игроков!"
 
 # /boosty reload
 reload_success: "&fКонфигурация и токены успешно обновлены!"
 reload_fail: "&fОшибка при обновлении токенов. Проверьте консоль."
 
-# help
+# /boosty (help menu)
 help_menu:
   - "&f--- &#FFB6C1Помощь по BoostyBridge &f---"
   - "&#FFB6C1/boosty link <ник> &f- Привязать аккаунт"
@@ -21,14 +21,14 @@ help_menu_admin:
 
 # /boosty link
 link_usage: "&fИспользование: &#FFB6C1/boosty link <ник_на_бусти>"
-link_fetching_data: "&aПроверка подписки на Boosty..."
+link_fetching_data: "&fПроверка подписки на Boosty..."
 link_success: "&fВаш аккаунт успешно привязан к Boosty: &#FFB6C1%name%"
 link_not_found: "&fПользователь с ником &#FFB6C1%name% &fне найден в списке подписчиков бусти."
 link_already_linked: "&fЭтот аккаунт Boosty уже привязан к другому игроку!"
 link_already_yours: "&fВы уже привязали свой аккаунт!"
 link_error: "&fОшибка при проверке подписки."
-link_dm_required: "&fДля завершения привязки введите код, отправленный вам в ЛС на Boosty!"
-link_email_fail: "&cНеверный код подтверждения!"
+link_dm_prompt: "&fДля завершения привязки введите код, отправленный вам в ЛС на Boosty!"
+link_email_fail: "&fНеверный код подтверждения!"
 
 # /boosty info
 info_usage: "&fИспользование: &#FFB6C1/boosty info"
@@ -42,10 +42,10 @@ info_format:
 # /boosty discord
 discord_usage: "&cИспользование: &#FFB6C1/boosty discord <ваш_discord_юзернейм>"
 discord_checking: "&fПопытка привязки Discord аккаунта: &#FFB6C1%discord_tag%&f"
-discord_success: "&aDiscord аккаунт &#FFB6C1%discord_tag% &aуспешно подтверждён на сервере!"
-discord_not_found: "&cНе удалось найти пользователя &e%discord_tag% &cна нашем Discord сервере. Убедитесь, что вы зашли на сервер и верно указали ник (не отображаемое имя, а уникальный юзернейм)!"
-discord_error: "&cПроизошла внутренняя ошибка при привязке Discord."
-discord_already_linked: "&cВы уже привязали Discord аккаунт к вашему профилю Minecraft! Перепривязка невозможна."
+discord_success: "&fDiscord аккаунт &#FFB6C1%discord_tag% &fуспешно подтверждён на сервере!"
+discord_not_found: "&fНе удалось найти пользователя &#FFB6C1%discord_tag% &fна нашем Discord сервере. Убедитесь, что вы зашли на сервер и верно указали ник (не отображаемое имя, а уникальный юзернейм)!"
+discord_error: "&fПроизошла внутренняя ошибка при привязке Discord."
+discord_already_linked: "&fВы уже привязали Discord аккаунт к вашему профилю Minecraft!"
 
 # /boosty admin
 error_use_admin: "&cНеверное использование команды администратора."
@@ -56,7 +56,9 @@ admin_usage_setdiscord: "&fИспользование: &#FFB6C1/boosty admin set
 
 admin_player_not_found: "&cИгрок не найден в базе данных."
 admin_unlink_success: "&fАккаунт игрока &#FFB6C1%player% &fуспешно отвязан."
-admin_setdiscord_success: "&fDiscord-ник игрока &#FFB6C1%player% &fизменен на &#FFB6C1%discord%&f."
+
+admin_setdiscord_usage: "&fИспользование: &#FFB6C1/boosty admin setdiscord <игрок> <discord_username>"
+admin_setdiscord_success: "&fDiscord аккаунт для игрока &#FFB6C1%player% &fизменен на &#FFB6C1%discord%&f."
 
 #/boosty admin forcelink
 admin_forcelink_success: "&fАккаунт &#FFB6C1%boosty% &fпринудительно привязан к &#FFB6C1%player%&f."
@@ -86,7 +88,7 @@ discord:
       - name: "Аккаунт"
         value: "{ping}"
         inline: true
-    footer: "elytrya | github.com/elytrya/BoostyBridge"
+    footer: "[boostybridge](https://github.com/elytrya/BoostyBridge)"
 
   role-removed-embed:
     color: "#FF0000"
@@ -99,4 +101,10 @@ discord:
       - name: "Аккаунт"
         value: "{ping}"
         inline: true
-    footer: "elytrya | github.com/elytrya/BoostyBridge"
+    footer: "[boostybridge](https://github.com/elytrya/BoostyBridge)"
+
+# errors
+error_not_found: "&cНеизвестная команда или недостаточно прав."
+error_use_unlink: "&cИспользование: &#FFB6C1/boosty admin unlink <ник> [-s]"
+error_use_info: "&cИспользование: /boosty admin info <игрок>"
+error_use_forcelink: "&cИспользование: /boosty admin forcelink <игрок> <boosty_name>"

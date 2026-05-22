@@ -54,47 +54,29 @@ sync:
   interval_minutes: 60
 
 discord:
-  enabled: true
-  bot_token: token # Bot token from discord.com/developers
-  guild_id: '1487451822720422088' # Right-click your server => Copy Server ID
-  channel_id: '1498328968472821880' # channel id
-  embed_color: '#FFB6C1'
+  enabled: false
+  webhook_url: "вебхук"
+  embed_color: "#FFB6C1"
 
-  # Пример:
-  #   "Спонсор +": "123456789012345678"
-  #   "VIP":       "987654321098765432"
-  roles:
-    Follower: '1501541047279292508'
+  # Настройки дискорд бота
+  #   Как настроить:
+  #   1. Создайте бота на https://discord.com/developers/applications
+  #   2. Во вкладке "Bot" скопируйте Token в поле bot_token.
+  #   3. Включите Server Members Intent на той же странице.
+  #   4. Пригласите бота с правом "Manage Roles"!!:
+  #   5. Укажите ID вашего сервера (guild_id).
+  #   6. Для каждого уровня подписки Boosty добавьте запись в "roles:",
+  #   где ключ — название уровня, значение - ID роли Discord.
 
-  subscription:
+  bot:
     enabled: true
-    title: Новая подписка
-    message: 'Игрок **{player}** привязал Boosty: **{boosty_name}** (Уровень: **{level}**)'
-  unsubscription:
-    enabled: true
-    title: Подписка истекла
-    message: У игрока **{player}** закончилась подписка уровня **{level}**
-  admin_forcelink:
-    enabled: true
-    title: Принудительная привязка
-    message: 'Администратор принудительно привязал **{player}** к **{boosty_name}**
-      (Уровень: **{level}**)'
-  admin_unlink:
-    enabled: true
-    title: Принудительная отвязка
-    message: Администратор отвязал игрока **{player}** от Boosty
+    token: "token"
+    guild_id: 1487451822720422088 # айди сервера
+    channel_id: 1503425501719695520 # айди канала для логов выдачи ролей
 
-  # исп. флаг -s, чтобы событие отправилось как обычное (истечение / новая подписка)
-  # напр.: /boosty admin unlink elytrya -s => 🥀 Подписка истекла (unsubscription)
-  # или /boosty admin link elytrya elytrya -s > 🚀 Новая подписка (subscription)
-  admin_forcelink:
-    enabled: true
-    title: "🛠️ Принудительная привязка"
-    message: "Администратор принудительно привязал **{player}** к **{boosty_name}** (Уровень: **{level}**)"
-  admin_unlink:
-    enabled: true
-    title: "🛠️ Принудительная отвязка"
-    message: "Администратор отвязал игрока **{player}** от Boosty"
+    roles:
+      "Follower": # пример
+        role_id: 1501541047279292508
 
 # отправка кода подтверждения в личные сообщения бусти
 # пользователю приходит сообщение с кодом, который он должен ввести в чат на сервере
