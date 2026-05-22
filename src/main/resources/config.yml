@@ -55,7 +55,7 @@ sync:
 
 discord:
   enabled: true
-  bot_token: MTM4Nzg1ODE4NTg1MDk4MjQ2MQ.G1UDkV.dU7YtnCS386vp5U21j4A6Ci7U2SzwgoKqUBhTM # Bot token from discord.com/developers
+  bot_token: token # Bot token from discord.com/developers
   guild_id: '1487451822720422088' # Right-click your server => Copy Server ID
   channel_id: '1498328968472821880' # channel id
   embed_color: '#FFB6C1'
