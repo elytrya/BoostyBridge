@@ -17,6 +17,8 @@
 [![Hangar](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/available/hangar_vector.svg)](https://hangar.papermc.io/Elytrya/BoostyBridge)
 [![Spigot](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/available/spigot_vector.svg)](https://www.spigotmc.org/resources/boostybridge.133270/)
 
+[![bStats](https://bstats.org/signatures/bukkit/boostybridge.svg)](https://bstats.org/plugin/bukkit/30011)
+
 ---
 
 ### Legal Disclaimer / Важная правовая информация
