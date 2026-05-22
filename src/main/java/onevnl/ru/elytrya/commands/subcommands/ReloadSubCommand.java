@@ -1,44 +1,66 @@
 package onevnl.ru.elytrya.commands.subcommands;
 
-import org.bukkit.command.CommandSender;
-
+import onevnl.ru.elytrya.BoostyBridge;
 import onevnl.ru.elytrya.api.BoostyClient;
 import onevnl.ru.elytrya.api.managers.MessageManager;
+import org.bukkit.command.CommandSender;
 
 public class ReloadSubCommand implements SubCommand {
 
-    private final BoostyClient client;
+  private final BoostyClient client;
 
-    public ReloadSubCommand(BoostyClient client) {
-        this.client = client;
+  public ReloadSubCommand(BoostyClient client) {
+    this.client = client;
+  }
+
+  @Override
+  public String getName() {
+    return "reload";
+  }
+
+  @Override
+  public String getPermission() {
+    return "boosty.reload";
+  }
+
+  @Override
+  public void execute(CommandSender sender, String[] args) {
+    BoostyBridge plugin = (BoostyBridge) client.getPlugin();
+
+    plugin.reloadConfig();
+
+    client.reload();
+
+    if (client.getMessageManager() != null) {
+      client.getMessageManager().loadMessages();
     }
 
-    @Override
-    public String getName() {
-        return "reload";
+    if (plugin.getDiscordBotManager() != null) {
+      plugin.getDiscordBotManager().reload();
     }
 
-    @Override
-    public String getPermission() {
-        return "boosty.reload";
-    }
+    MessageManager msg = client.getMessageManager();
 
-    @Override
-    public void execute(CommandSender sender, String[] args) {
-        client.reload();
-
-        MessageManager msg = client.getMessageManager();
-
-        client.getAuthManager().checkAndRefreshToken().thenCompose(v -> 
-            client.getBlogManager().getBlogStats()
-        ).whenComplete((stats, ex) -> {
-            if (ex != null || stats == null) {
-                sender.sendMessage(msg.getMessage("reload_fail"));
-                client.getPlugin().getLogger().severe("Failed to verify Boosty token after reload! Token might be invalid.");
-            } else {
-                sender.sendMessage(msg.getMessage("reload_success"));
-                client.getPlugin().getLogger().info("Config and Boosty token successfully reloaded and verified!");
-            }
-        });
-    }
+    client
+      .getAuthManager()
+      .checkAndRefreshToken()
+      .thenCompose(v -> client.getBlogManager().getBlogStats())
+      .whenComplete((stats, ex) -> {
+        if (ex != null || stats == null) {
+          sender.sendMessage(msg.getMessage("reload_fail"));
+          plugin
+            .getLogger()
+            .severe(
+              "Failed to verify Boosty token after reload! Token might be invalid."
+            );
+        } else {
+          sender.sendMessage(msg.getMessage("reload_success"));
+          plugin
+            .getLogger()
+            .info(
+              "Config, Discord bot settings, embeds and Boosty tokens successfully reloaded!"
+            );
+        }
+      });
+  }
 }
