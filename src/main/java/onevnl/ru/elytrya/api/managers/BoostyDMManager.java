@@ -46,7 +46,7 @@ public class BoostyDMManager {
         return client.getHttpClient().sendAsync(request, HttpResponse.BodyHandlers.ofString())
                 .thenApply(response -> {
                     client.debug("Create dialog => code: " + response.statusCode());
-                    if (response.statusCode() == 200) {
+                    if (response.statusCode() == 200 || response.statusCode() == 201) {
                         try {
                             JsonObject json = client.getGson().fromJson(response.body(), JsonObject.class);
                             if (json.has("id")) return json.get("id").getAsString();
