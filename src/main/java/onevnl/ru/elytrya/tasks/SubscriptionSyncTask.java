@@ -4,7 +4,6 @@ import java.util.List;
 import onevnl.ru.elytrya.BoostyBridge;
 import onevnl.ru.elytrya.api.BoostyClient;
 import onevnl.ru.elytrya.models.BoostyUser;
-import onevnl.ru.elytrya.util.BoostyNameValidator;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -35,7 +34,12 @@ public class SubscriptionSyncTask extends BukkitRunnable {
             client.debug(
               "player " + user.playerName() + " lost their subscription!"
             );
-            takeRewards(user.playerName(), user.boostyName(), currentLevel);
+            takeRewards(
+              user.uuid(),
+              user.playerName(),
+              user.boostyName(),
+              currentLevel
+            );
 
             plugin
               .getDiscordBotManager()
@@ -61,8 +65,18 @@ public class SubscriptionSyncTask extends BukkitRunnable {
                   " -> " +
                   newLevel
               );
-              takeRewards(user.playerName(), user.boostyName(), currentLevel);
-              giveRewards(user.playerName(), user.boostyName(), newLevel);
+              takeRewards(
+              user.uuid(),
+              user.playerName(),
+              user.boostyName(),
+              currentLevel
+            );
+              giveRewards(
+                user.uuid(),
+                user.playerName(),
+                user.boostyName(),
+                newLevel
+              );
 
               plugin
                 .getDiscordBotManager()
@@ -93,57 +107,25 @@ public class SubscriptionSyncTask extends BukkitRunnable {
   }
 
   private void takeRewards(
+    java.util.UUID uuid,
     String playerName,
     String boostyName,
     String levelName
   ) {
-    dispatchRewards(playerName, boostyName, levelName, "take");
+    client
+      .getRewardManager()
+      .dispatch(uuid, playerName, boostyName, levelName, "take");
   }
 
   private void giveRewards(
+    java.util.UUID uuid,
     String playerName,
     String boostyName,
     String levelName
   ) {
-    dispatchRewards(playerName, boostyName, levelName, "give");
+    client
+      .getRewardManager()
+      .dispatch(uuid, playerName, boostyName, levelName, "give");
   }
 
-  private void dispatchRewards(
-    String playerName,
-    String boostyName,
-    String levelName,
-    String action
-  ) {
-    if (!BoostyNameValidator.isValid(boostyName)) {
-      client
-        .getPlugin()
-        .getLogger()
-        .warning(
-          "Reward commands (" +
-          action +
-          ") skipped for " +
-          playerName +
-          ": stored Boosty name failed validation."
-        );
-      return;
-    }
-
-    String safeBoostyName = BoostyNameValidator.sanitize(boostyName);
-
-    Bukkit.getScheduler().runTask(client.getPlugin(), () -> {
-      List<String> commands = client
-        .getPlugin()
-        .getConfig()
-        .getStringList("rewards." + levelName + "." + action);
-      if (commands == null) return;
-      for (String cmd : commands) {
-        Bukkit.dispatchCommand(
-          Bukkit.getConsoleSender(),
-          cmd
-            .replace("%player%", playerName)
-            .replace("%boosty_name%", safeBoostyName)
-        );
-      }
-    });
-  }
 }

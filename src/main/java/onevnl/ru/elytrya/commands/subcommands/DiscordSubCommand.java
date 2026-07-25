@@ -10,6 +10,7 @@ import onevnl.ru.elytrya.models.BoostyUser;
 import onevnl.ru.elytrya.models.PendingDiscordConfirm;
 import onevnl.ru.elytrya.models.PendingDiscordLink;
 import onevnl.ru.elytrya.util.DiscordNameValidator;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -67,6 +68,22 @@ public class DiscordSubCommand implements SubCommand {
       handleConfirmation(player, uuid, bot, action.equals("confirm"), msg);
       return;
     }
+
+    Bukkit.getScheduler()
+      .runTaskAsynchronously(
+        client.getPlugin(),
+        () -> startLinking(player, uuid, bot, args, msg)
+      );
+  }
+
+  private void startLinking(
+    Player player,
+    UUID uuid,
+    DiscordBotManager bot,
+    String[] args,
+    MessageManager msg
+  ) {
+    if (!player.isOnline()) return;
 
     String linked = client.getDatabase().getDiscordUser(uuid);
     if (linked != null && !linked.isEmpty()) {

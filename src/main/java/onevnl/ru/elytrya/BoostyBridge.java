@@ -7,6 +7,7 @@ import onevnl.ru.elytrya.hooks.PlaceholderProcessor;
 import onevnl.ru.elytrya.listeners.ChatListener;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class BoostyBridge extends JavaPlugin {
@@ -21,7 +22,14 @@ public class BoostyBridge extends JavaPlugin {
     this.boostyClient = new BoostyClient(this);
     this.discordBotManager = new DiscordBotManager(this.boostyClient);
 
-    getCommand("boosty").setExecutor(new BoostyCommand(this.boostyClient));
+    PluginCommand command = getCommand("boosty");
+    if (command != null) {
+      command.setExecutor(new BoostyCommand(this.boostyClient));
+    } else {
+      getLogger().severe(
+        "Command /boosty is missing from plugin.yml, commands will not work."
+      );
+    }
     getServer()
       .getPluginManager()
       .registerEvents(new ChatListener(this.boostyClient), this);

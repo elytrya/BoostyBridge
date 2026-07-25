@@ -75,11 +75,15 @@ public class LinkSubCommand implements SubCommand {
         "'"
     );
 
-    if (!validateLink(player, boostyName, msg)) {
-      return;
-    }
-
-    loadSubscriber(player, boostyName, msg);
+    Bukkit.getScheduler()
+      .runTaskAsynchronously(
+        client.getPlugin(),
+        () -> {
+          if (!player.isOnline()) return;
+          if (!validateLink(player, boostyName, msg)) return;
+          loadSubscriber(player, boostyName, msg);
+        }
+      );
   }
 
   private boolean validateLink(

@@ -3,6 +3,7 @@ package onevnl.ru.elytrya.database;
 import java.util.List;
 import java.util.UUID;
 import onevnl.ru.elytrya.models.BoostyUser;
+import onevnl.ru.elytrya.models.QueuedReward;
 
 public interface Database {
   void connect();
@@ -25,4 +26,14 @@ public interface Database {
   //для дискорд бота
   String getDiscordUser(UUID uuid);
   void setDiscordUser(UUID uuid, String discordUser);
+
+  void queueReward(
+    UUID uuid,
+    String action,
+    String levelName,
+    String boostyName
+  );
+  List<QueuedReward> getQueuedRewards(UUID uuid);
+  void clearQueuedRewards(UUID uuid);
+  int getQueuedRewardsCount();
 }

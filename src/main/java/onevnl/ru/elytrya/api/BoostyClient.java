@@ -14,6 +14,7 @@ import onevnl.ru.elytrya.api.managers.BlogManager;
 import onevnl.ru.elytrya.api.managers.BoostyDMManager;
 import onevnl.ru.elytrya.api.managers.DiscordManager;
 import onevnl.ru.elytrya.api.managers.MessageManager;
+import onevnl.ru.elytrya.api.managers.RewardManager;
 import onevnl.ru.elytrya.database.Database;
 import onevnl.ru.elytrya.database.MySQL;
 import onevnl.ru.elytrya.database.SQLite;
@@ -33,6 +34,7 @@ public class BoostyClient {
     private AuthManager authManager;
     private BlogManager blogManager;
     private Database database;
+    private RewardManager rewardManager;
     private TokenCipher tokenCipher;
 
     private final Map<UUID, PendingLink> pendingLinks;
@@ -60,6 +62,7 @@ public class BoostyClient {
         this.blogManager = new BlogManager(this);
         this.discordManager = new DiscordManager(this);
         this.dmManager = new BoostyDMManager(this);
+        this.rewardManager = new RewardManager(this);
 
         if (this.database != null) {
             this.database.disconnect();
@@ -161,6 +164,10 @@ public class BoostyClient {
 
     public BlogManager getBlogManager() {
         return blogManager;
+    }
+
+    public RewardManager getRewardManager() {
+        return rewardManager;
     }
 
     public Database getDatabase() {

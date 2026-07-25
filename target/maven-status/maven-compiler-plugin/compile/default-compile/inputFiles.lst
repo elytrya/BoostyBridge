@@ -5,6 +5,7 @@ C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\api\
 C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\api\managers\DiscordBotManager.java
 C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\api\managers\DiscordManager.java
 C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\api\managers\MessageManager.java
+C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\api\managers\RewardManager.java
 C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\BoostyBridge.java
 C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\commands\BoostyCommand.java
 C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\commands\subcommands\AdminSubCommand.java
@@ -24,6 +25,7 @@ C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\mode
 C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\models\PendingDiscordConfirm.java
 C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\models\PendingDiscordLink.java
 C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\models\PendingLink.java
+C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\models\QueuedReward.java
 C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\tasks\PendingLinkCleanupTask.java
 C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\tasks\SubscriptionSyncTask.java
 C:\Users\sorok\Music\onevnl-pl\BoostyBridge\src\main\java\onevnl\ru\elytrya\util\BoostyNameValidator.java

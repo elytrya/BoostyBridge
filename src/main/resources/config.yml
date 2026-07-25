@@ -112,5 +112,13 @@ dm_verification:
 # если не удалось отправить сообщение в личные сообщения Boosty.
 verify_email: true
 
+rewards_queue:
+  enabled: true
+  delay_ticks: 40
+  max_age_days: 30
+
+placeholders:
+  cache_seconds: 30
+
 debug: false
-bstats: true # bStats metrics
+bstats: true

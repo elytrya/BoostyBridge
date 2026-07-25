@@ -218,7 +218,21 @@ public class ChatListener implements Listener {
 
   @EventHandler
   public void onJoin(PlayerJoinEvent event) {
-    UUID uuid = event.getPlayer().getUniqueId();
+    Player joined = event.getPlayer();
+    UUID uuid = joined.getUniqueId();
+
+    if (client.getRewardManager().isQueueEnabled()) {
+      Bukkit.getScheduler()
+        .runTaskLater(
+          client.getPlugin(),
+          () -> {
+            if (!joined.isOnline()) return;
+            client.getRewardManager().flush(uuid, joined.getName());
+          },
+          Math.max(1L, client.getRewardManager().getDeliveryDelayTicks())
+        );
+    }
+
     if (!client.getPendingDiscordConfirms().containsKey(uuid)) return;
 
     Bukkit.getScheduler()

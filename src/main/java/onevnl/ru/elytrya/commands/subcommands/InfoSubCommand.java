@@ -5,6 +5,7 @@ import onevnl.ru.elytrya.api.BoostyClient;
 import onevnl.ru.elytrya.api.managers.DiscordBotManager;
 import onevnl.ru.elytrya.api.managers.MessageManager;
 import onevnl.ru.elytrya.models.BoostyUser;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -35,7 +36,14 @@ public class InfoSubCommand implements SubCommand {
       return;
     }
 
+    Bukkit.getScheduler()
+      .runTaskAsynchronously(client.getPlugin(), () -> showInfo(player, msg));
+  }
+
+  private void showInfo(Player player, MessageManager msg) {
     BoostyUser user = client.getDatabase().getUser(player.getUniqueId());
+
+    if (!player.isOnline()) return;
 
     if (user == null) {
       player.sendMessage(msg.getMessage("info_not_linked"));

@@ -105,6 +105,8 @@ admin_forcesync_async: "&fСинхронизация выполняется в �
 admin_notify_unlinked: "&fАдминистратор &#FFB6C1%admin% &fснял вашу привязку Boosty."
 admin_notify_forcelinked: "&fАдминистратор &#FFB6C1%admin% &fпривязал ваш аккаунт к Boosty &#FFB6C1%boosty%&f."
 
+reward_queue_delivered: "&fПока вас не было на сервере, вам начислены награды: &#FFB6C1%level%"
+
 discord:
   role-given-embed:
     color: "#FFB6C1"

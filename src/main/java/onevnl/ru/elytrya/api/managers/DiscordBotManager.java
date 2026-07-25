@@ -141,9 +141,18 @@ public class DiscordBotManager {
   }
 
   public void stop() {
-    if (jda != null) {
-      jda.shutdown();
-      jda = null;
+    if (jda == null) return;
+
+    net.dv8tion.jda.api.JDA current = jda;
+    jda = null;
+
+    try {
+      current.shutdown();
+    } catch (Exception e) {
+      client
+        .getPlugin()
+        .getLogger()
+        .warning("Failed to stop Discord bot gracefully: " + e.getClass().getSimpleName());
     }
   }
 
