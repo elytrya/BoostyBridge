@@ -64,6 +64,21 @@ public abstract class AbstractDatabase implements Database {
   }
 
   @Override
+  public BoostyUser getUserByPlayerName(String playerName) {
+    if (playerName == null || playerName.isEmpty()) return null;
+    String sql = "SELECT * FROM boosty_links WHERE LOWER(player_name) = ?";
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setString(1, playerName.toLowerCase());
+      try (ResultSet rs = statement.executeQuery()) {
+        if (rs.next()) return mapUser(rs);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override
   public String getBoostyName(UUID uuid) {
     BoostyUser user = getUser(uuid);
     return user != null ? user.boostyName() : null;

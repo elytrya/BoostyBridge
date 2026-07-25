@@ -40,6 +40,17 @@ public class MessageManager {
         return color(prefix + message);
     }
 
+    public String getMessage(String path, String defaultMessage) {
+        String message = messagesConfig.getString(path, defaultMessage);
+        String prefix = messagesConfig.getString("prefix", "");
+        return color(prefix + (message != null ? message : defaultMessage));
+    }
+
+    public String getRawMessage(String path, String defaultMessage) {
+        String message = messagesConfig.getString(path, defaultMessage);
+        return color(message != null ? message : defaultMessage);
+    }
+
     public List<String> getMessageList(String path) {
         List<String> list = messagesConfig.getStringList(path);
         if (list.isEmpty()) {
@@ -61,7 +72,7 @@ public class MessageManager {
 
     public void broadcastCongratulation(String playerName, String levelName) {
         if (levelName.equalsIgnoreCase("none")) return;
-        
+
         boolean enabled = plugin.getConfig().getBoolean("rewards." + levelName + ".congratulation", false);
         if (!enabled) return;
 

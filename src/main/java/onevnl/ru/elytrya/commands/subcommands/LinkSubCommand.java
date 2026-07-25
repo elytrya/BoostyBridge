@@ -1,19 +1,22 @@
 package onevnl.ru.elytrya.commands.subcommands;
 
 import com.google.gson.JsonObject;
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 import onevnl.ru.elytrya.BoostyBridge;
 import onevnl.ru.elytrya.api.BoostyClient;
 import onevnl.ru.elytrya.api.managers.MessageManager;
 import onevnl.ru.elytrya.models.PendingLink;
+import onevnl.ru.elytrya.util.BoostyNameValidator;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 public class LinkSubCommand implements SubCommand {
+
+  private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
   private final BoostyClient client;
 
@@ -45,10 +48,24 @@ public class LinkSubCommand implements SubCommand {
       return;
     }
 
-    String boostyName = String.join(
-      " ",
-      Arrays.copyOfRange(args, 1, args.length)
+    String boostyName = BoostyNameValidator.normalize(
+      String.join(" ", Arrays.copyOfRange(args, 1, args.length))
     );
+
+    if (!BoostyNameValidator.isValid(boostyName)) {
+      player.sendMessage(
+        msg.getMessage(
+          "link_invalid_name",
+          "&cНедопустимое имя Boosty. Уберите служебные символы (до " +
+          BoostyNameValidator.MAX_LENGTH +
+          " символов)."
+        )
+      );
+      client.debug(
+        "Player " + player.getName() + " provided an invalid Boosty name."
+      );
+      return;
+    }
 
     client.debug(
       "Player " +
@@ -172,10 +189,7 @@ public class LinkSubCommand implements SubCommand {
 
     if (!useDM || userId == null) return false;
 
-    String code = String.format(
-      "%06d",
-      ThreadLocalRandom.current().nextInt(1_000_000)
-    );
+    String code = generateVerificationCode();
 
     client
       .getDmManager()
@@ -188,7 +202,33 @@ public class LinkSubCommand implements SubCommand {
               player.getUniqueId(),
               new PendingLink(boostyName, levelName, code, "dm")
             );
-          player.sendMessage(msg.getMessage("link_dm_prompt"));
+          player.sendMessage(
+            msg
+              .getMessage("link_dm_prompt")
+              .replace(
+                "%minutes%",
+                String.valueOf(PendingLink.TTL_MILLIS / 60000L)
+              )
+              .replace(
+                "%attempts%",
+                String.valueOf(PendingLink.MAX_ATTEMPTS)
+              )
+          );
+          player.sendMessage(
+            msg
+              .getMessage(
+                "link_code_ttl",
+                "&7Код действителен %minutes% мин. Попыток ввода: %attempts%."
+              )
+              .replace(
+                "%minutes%",
+                String.valueOf(PendingLink.TTL_MILLIS / 60000L)
+              )
+              .replace(
+                "%attempts%",
+                String.valueOf(PendingLink.MAX_ATTEMPTS)
+              )
+          );
           client.debug(
             "DM verification code sent successfully for " + boostyName
           );
@@ -226,8 +266,29 @@ public class LinkSubCommand implements SubCommand {
         new PendingLink(boostyName, levelName, email, "email")
       );
 
-    player.sendMessage(msg.getMessage("link_email_prompt"));
+    player.sendMessage(
+      msg
+        .getMessage("link_email_prompt")
+        .replace("%minutes%", String.valueOf(PendingLink.TTL_MILLIS / 60000L))
+        .replace("%attempts%", String.valueOf(PendingLink.MAX_ATTEMPTS))
+    );
+    player.sendMessage(
+      msg
+        .getMessage(
+          "link_code_ttl",
+          "&7Код действителен %minutes% мин. Попыток ввода: %attempts%."
+        )
+        .replace(
+          "%minutes%",
+          String.valueOf(PendingLink.TTL_MILLIS / 60000L)
+        )
+        .replace("%attempts%", String.valueOf(PendingLink.MAX_ATTEMPTS))
+    );
     return true;
+  }
+
+  private String generateVerificationCode() {
+    return String.format("%06d", SECURE_RANDOM.nextInt(1_000_000));
   }
 
   private void completeLink(
@@ -249,10 +310,10 @@ public class LinkSubCommand implements SubCommand {
 
     ((BoostyBridge) client.getPlugin())
       .getDiscordBotManager()
-      .updateUserRole(
+      .syncRoleAndPrompt(
         player.getUniqueId(),
         player.getName(),
-        "none",
+        null,
         levelName
       );
 
@@ -273,6 +334,18 @@ public class LinkSubCommand implements SubCommand {
     String boostyName,
     String levelName
   ) {
+    if (!BoostyNameValidator.isValid(boostyName)) {
+      client
+        .getPlugin()
+        .getLogger()
+        .warning(
+          "Reward commands skipped: stored Boosty name failed validation."
+        );
+      return;
+    }
+
+    String safeBoostyName = BoostyNameValidator.sanitize(boostyName);
+
     client
       .getPlugin()
       .getServer()
@@ -291,7 +364,7 @@ public class LinkSubCommand implements SubCommand {
         for (String cmd : commands) {
           String finalCmd = cmd
             .replace("%player%", player.getName())
-            .replace("%boosty_name%", boostyName);
+            .replace("%boosty_name%", safeBoostyName);
 
           Bukkit.dispatchCommand(Bukkit.getConsoleSender(), finalCmd);
           client.debug("Executed reward command: " + finalCmd);

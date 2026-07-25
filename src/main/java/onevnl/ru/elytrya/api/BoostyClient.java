@@ -17,7 +17,10 @@ import onevnl.ru.elytrya.api.managers.MessageManager;
 import onevnl.ru.elytrya.database.Database;
 import onevnl.ru.elytrya.database.MySQL;
 import onevnl.ru.elytrya.database.SQLite;
+import onevnl.ru.elytrya.models.PendingDiscordLink;
 import onevnl.ru.elytrya.models.PendingLink;
+import onevnl.ru.elytrya.tasks.PendingLinkCleanupTask;
+import onevnl.ru.elytrya.util.TokenCipher;
 
 public class BoostyClient {
     private DiscordManager discordManager;
@@ -30,26 +33,34 @@ public class BoostyClient {
     private AuthManager authManager;
     private BlogManager blogManager;
     private Database database;
-    
+    private TokenCipher tokenCipher;
+
     private final Map<UUID, PendingLink> pendingLinks;
+    private final Map<UUID, PendingDiscordLink> pendingDiscordLinks;
+    private final Map<UUID, onevnl.ru.elytrya.models.PendingDiscordConfirm> pendingDiscordConfirms;
     private org.bukkit.scheduler.BukkitTask syncTask;
+    private org.bukkit.scheduler.BukkitTask pendingLinkCleanupTask;
 
     public BoostyClient(JavaPlugin plugin) {
         this.plugin = plugin;
         this.httpClient = HttpClient.newHttpClient();
         this.gson = new Gson();
         this.pendingLinks = new ConcurrentHashMap<>();
+        this.pendingDiscordLinks = new ConcurrentHashMap<>();
+        this.pendingDiscordConfirms = new ConcurrentHashMap<>();
 
         loadManagers();
     }
 
     private void loadManagers() {
+        loadTokenCipher();
+
         this.messageManager = new MessageManager(plugin);
         this.authManager = new AuthManager(this);
         this.blogManager = new BlogManager(this);
         this.discordManager = new DiscordManager(this);
         this.dmManager = new BoostyDMManager(this);
-        
+
         if (this.database != null) {
             this.database.disconnect();
         }
@@ -67,21 +78,47 @@ public class BoostyClient {
         }
         long interval = plugin.getConfig().getLong("sync.interval_minutes", 60) * 60 * 20L;
         syncTask = new onevnl.ru.elytrya.tasks.SubscriptionSyncTask(this).runTaskTimerAsynchronously(plugin, interval, interval);
+
+        if (pendingLinkCleanupTask != null) {
+            pendingLinkCleanupTask.cancel();
+        }
+        pendingLinkCleanupTask = new PendingLinkCleanupTask(this).runTaskTimerAsynchronously(plugin, 1200L, 1200L);
+    }
+
+    private void loadTokenCipher() {
+        if (this.tokenCipher != null) return;
+        try {
+            if (!plugin.getDataFolder().exists()) {
+                plugin.getDataFolder().mkdirs();
+            }
+            this.tokenCipher = new TokenCipher(plugin.getDataFolder());
+        } catch (Exception e) {
+            this.tokenCipher = null;
+            plugin.getLogger().severe("Failed to initialize token encryption: " + e.getClass().getSimpleName());
+        }
     }
 
     public void reload() {
         plugin.reloadConfig();
         loadManagers();
         pendingLinks.clear();
+        pendingDiscordLinks.clear();
+        pendingDiscordConfirms.clear();
     }
 
     public void disable() {
         if (syncTask != null) {
             syncTask.cancel();
         }
+        if (pendingLinkCleanupTask != null) {
+            pendingLinkCleanupTask.cancel();
+        }
         if (database != null) {
             database.disconnect();
         }
+        pendingLinks.clear();
+        pendingDiscordLinks.clear();
+        pendingDiscordConfirms.clear();
     }
 
     public void debug(String message) {
@@ -100,6 +137,10 @@ public class BoostyClient {
 
     public Gson getGson() {
         return gson;
+    }
+
+    public TokenCipher getTokenCipher() {
+        return tokenCipher;
     }
 
     public MessageManager getMessageManager() {
@@ -128,5 +169,13 @@ public class BoostyClient {
 
     public Map<UUID, PendingLink> getPendingLinks() {
         return pendingLinks;
+    }
+
+    public Map<UUID, PendingDiscordLink> getPendingDiscordLinks() {
+        return pendingDiscordLinks;
+    }
+
+    public Map<UUID, onevnl.ru.elytrya.models.PendingDiscordConfirm> getPendingDiscordConfirms() {
+        return pendingDiscordConfirms;
     }
 }

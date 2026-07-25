@@ -4,6 +4,7 @@ import java.util.List;
 import onevnl.ru.elytrya.BoostyBridge;
 import onevnl.ru.elytrya.api.BoostyClient;
 import onevnl.ru.elytrya.models.BoostyUser;
+import onevnl.ru.elytrya.util.BoostyNameValidator;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -65,10 +66,10 @@ public class SubscriptionSyncTask extends BukkitRunnable {
 
               plugin
                 .getDiscordBotManager()
-                .updateUserRole(
+                .syncRoleAndPrompt(
                   user.uuid(),
                   user.playerName(),
-                  currentLevel,
+                  null,
                   newLevel
                 );
 
@@ -96,21 +97,7 @@ public class SubscriptionSyncTask extends BukkitRunnable {
     String boostyName,
     String levelName
   ) {
-    Bukkit.getScheduler().runTask(client.getPlugin(), () -> {
-      List<String> commands = client
-        .getPlugin()
-        .getConfig()
-        .getStringList("rewards." + levelName + ".take");
-      if (commands == null) return;
-      for (String cmd : commands) {
-        Bukkit.dispatchCommand(
-          Bukkit.getConsoleSender(),
-          cmd
-            .replace("%player%", playerName)
-            .replace("%boosty_name%", boostyName)
-        );
-      }
-    });
+    dispatchRewards(playerName, boostyName, levelName, "take");
   }
 
   private void giveRewards(
@@ -118,18 +105,43 @@ public class SubscriptionSyncTask extends BukkitRunnable {
     String boostyName,
     String levelName
   ) {
+    dispatchRewards(playerName, boostyName, levelName, "give");
+  }
+
+  private void dispatchRewards(
+    String playerName,
+    String boostyName,
+    String levelName,
+    String action
+  ) {
+    if (!BoostyNameValidator.isValid(boostyName)) {
+      client
+        .getPlugin()
+        .getLogger()
+        .warning(
+          "Reward commands (" +
+          action +
+          ") skipped for " +
+          playerName +
+          ": stored Boosty name failed validation."
+        );
+      return;
+    }
+
+    String safeBoostyName = BoostyNameValidator.sanitize(boostyName);
+
     Bukkit.getScheduler().runTask(client.getPlugin(), () -> {
       List<String> commands = client
         .getPlugin()
         .getConfig()
-        .getStringList("rewards." + levelName + ".give");
+        .getStringList("rewards." + levelName + "." + action);
       if (commands == null) return;
       for (String cmd : commands) {
         Bukkit.dispatchCommand(
           Bukkit.getConsoleSender(),
           cmd
             .replace("%player%", playerName)
-            .replace("%boosty_name%", boostyName)
+            .replace("%boosty_name%", safeBoostyName)
         );
       }
     });

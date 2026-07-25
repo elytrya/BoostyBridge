@@ -143,7 +143,9 @@ public class BoostyCommand implements CommandExecutor, TabCompleter {
     } else if (
       args.length == 2 && args[0].equalsIgnoreCase("discord") && discordEnabled
     ) {
-      if (sender instanceof Player) completions.add("<discord_username>");
+      if (sender instanceof Player player) {
+        completions.add(player.getName());
+      }
     }
     return completions;
   }

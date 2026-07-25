@@ -20,6 +20,7 @@ public interface Database {
   void updateLevel(UUID uuid, String levelName);
   int getActiveSubscribersCount();
   BoostyUser getUser(UUID uuid);
+  BoostyUser getUserByPlayerName(String playerName);
 
   //для дискорд бота
   String getDiscordUser(UUID uuid);

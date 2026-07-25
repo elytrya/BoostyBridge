@@ -1,113 +1,132 @@
-# support: hex
-
-#general
 prefix: "&#FFB6C1[BoostyBridge] &f"
-no_permission: "&fУ вас нет прав для выполнения этой команды!"
-unknown_command: "&fНеизвестная подкоманда. Используйте &#FFB6C1/boosty reload"
-only_players: "&fЭта команда доступна только для игроков!"
 
-# /boosty reload
-reload_success: "&fКонфигурация и токены успешно обновлены!"
-reload_fail: "&fОшибка при обновлении токенов. Проверьте консоль."
+only_players: "&cЭта команда доступна только игрокам."
+no_permission: "&cУ вас нет прав на использование этой команды."
+unknown_command: "&cНеизвестная подкоманда. Используйте &#FFB6C1/boosty help"
 
-# /boosty (help menu)
 help_menu:
-  - "&f--- &#FFB6C1Помощь по BoostyBridge &f---"
-  - "&#FFB6C1/boosty link <ник> &f- Привязать аккаунт"
-  - "&#FFB6C1/boosty info &f- Информация о вашей привязке"
-  - "&#FFB6C1/boosty discord <юзернейм> &f- Привязать ваш Discord"
+  - "&#FFB6C1&lBoostyBridge"
+  - "&7Привязка подписки Boosty к аккаунту Minecraft."
+  - ""
+  - "&#FFB6C1/boosty link <ник_boosty> &8- &fпривязать подписку Boosty"
+  - "&#FFB6C1/boosty discord <юзернейм> &8- &fпривязать Discord и получить роль"
+  - "&#FFB6C1/boosty info &8- &fваш текущий статус подписки"
+  - "&#FFB6C1/boosty help &8- &fэто меню"
+
 help_menu_admin:
-  - "&#FFB6C1/boosty admin &f- Команды администратора"
+  - ""
+  - "&#FFB6C1&lАдминистрирование"
+  - "&#FFB6C1/boosty reload &8- &fперезагрузить конфигурацию"
+  - "&#FFB6C1/boosty admin info <игрок> &8- &fинформация об игроке"
+  - "&#FFB6C1/boosty admin unlink <игрок> &8- &fснять привязку"
+  - "&#FFB6C1/boosty admin forcelink <игрок> <ник_boosty> &8- &fпривязать вручную"
+  - "&#FFB6C1/boosty admin setdiscord <игрок> <юзернейм> &8- &fзадать Discord"
+  - "&#FFB6C1/boosty admin forcesync &8- &fзапустить синхронизацию сейчас"
 
-# /boosty link
-link_usage: "&fИспользование: &#FFB6C1/boosty link <ник_на_бусти>"
-link_fetching_data: "&fПроверка подписки на Boosty..."
-link_success: "&fВаш аккаунт успешно привязан к Boosty: &#FFB6C1%name%"
-link_not_found: "&fПользователь с ником &#FFB6C1%name% &fне найден в списке подписчиков бусти."
-link_already_linked: "&fЭтот аккаунт Boosty уже привязан к другому игроку!"
-link_already_yours: "&fВы уже привязали свой аккаунт!"
-link_error: "&fОшибка при проверке подписки."
-link_dm_prompt: "&fДля завершения привязки введите код, отправленный вам в ЛС на Boosty!"
-link_email_fail: "&fНеверный код подтверждения!"
+link_usage: "&fИспользование: &#FFB6C1/boosty link <ваш_ник_на_boosty>"
+link_invalid_name: "&fНедопустимый ник Boosty. Уберите служебные символы и попробуйте снова (до 128 символов)."
+link_already_linked: "&fЭтот аккаунт Boosty уже привязан к другому игроку."
+link_already_yours: "&fУ вас уже есть привязанный аккаунт Boosty."
+link_fetching_data: "&fПроверяю подписку на Boosty, подождите..."
+link_not_found: "&fПодписчик &#FFB6C1%name% &fне найден. Проверьте, правильно ли указан ник."
+link_dm_prompt: "&fОтправил код подтверждения в личные сообщения Boosty. Введите его в чат в течение &#FFB6C1%minutes% мин&f."
+link_dm_error: "&fНе удалось отправить сообщение в Boosty. Попробуйте позже или обратитесь к администрации."
+link_email_prompt: "&fВведите в чат последние 4 символа вашей почты, указанной на Boosty. Времени: &#FFB6C1%minutes% мин&f, попыток: &#FFB6C1%attempts%"
+link_email_fail: "&fНеверно. Осталось попыток: &#FFB6C1%attempts%"
+link_code_ttl: "&fКод действителен &#FFB6C1%minutes% мин&f. Попыток ввода: &#FFB6C1%attempts%"
+link_code_expired: "&fВремя подтверждения истекло. Начните заново: &#FFB6C1/boosty link <ник>"
+link_attempts_left: "&fНеверный код. Осталось попыток: &#FFB6C1%attempts%"
+link_attempts_exceeded: "&fПопытки закончились. Запросите новый код: &#FFB6C1/boosty link <ник>"
+link_success: "&fАккаунт Boosty &#FFB6C1%name% &fуспешно привязан!"
+link_error: "&cПроизошла ошибка при обращении к Boosty. Попробуйте позже."
 
-# /boosty info
-info_usage: "&fИспользование: &#FFB6C1/boosty info"
-info_not_linked: "&fВы еще &#FFB6C1не привязали &fсвой аккаунт. Используйте &#FFB6C1/boosty link <ник>"
+congratulation_message:
+  - ""
+  - "&#FFB6C1&lСпасибо за поддержку!"
+  - "&fИгрок &#FFB6C1{nickname} &fоформил подписку уровня &#FFB6C1{level_name}&f."
+  - ""
+
+info_linked: "&fВаш аккаунт Boosty: &#FFB6C1%boosty%&f, уровень: &#FFB6C1%level%"
+info_not_linked: "&fУ вас нет привязанной подписки. Привязать: &#FFB6C1/boosty link <ник_boosty>"
+info_discord_linked: "&fDiscord: &#FFB6C1%discord_tag%"
+info_discord_not_linked: "&fDiscord не привязан. Привязать: &#FFB6C1/boosty discord <юзернейм>"
+
 info_format:
-  - "&f--- &#FFB6C1Ваша привязка &f---"
+  - "&#FFB6C1&lИнформация об игроке"
   - "&fИгрок: &#FFB6C1%player%"
   - "&fBoosty: &#FFB6C1%boosty%"
   - "&fУровень: &#FFB6C1%level%"
 
-# /boosty discord
-discord_usage: "&cИспользование: &#FFB6C1/boosty discord <ваш_discord_юзернейм>"
-discord_checking: "&fПопытка привязки Discord аккаунта: &#FFB6C1%discord_tag%&f"
-discord_success: "&fDiscord аккаунт &#FFB6C1%discord_tag% &fуспешно подтверждён на сервере!"
-discord_not_found: "&fНе удалось найти пользователя &#FFB6C1%discord_tag% &fна нашем Discord сервере. Убедитесь, что вы зашли на сервер и верно указали ник (не отображаемое имя, а уникальный юзернейм)!"
-discord_error: "&fПроизошла внутренняя ошибка при привязке Discord."
-discord_already_linked: "&fВы уже привязали Discord аккаунт к вашему профилю Minecraft!"
+discord_usage: "&fИспользование: &#FFB6C1/boosty discord <ваш_юзернейм_discord>"
+discord_invalid_name: "&fНедопустимый юзернейм Discord. Укажите именно юзернейм (например elytrya), а не отображаемое имя."
+discord_checking: "&fИщу пользователя &#FFB6C1%discord_tag% &fна Discord-сервере..."
+discord_success: "&fDiscord &#FFB6C1%discord_tag% &fпривязан, роль выдана."
+discord_not_found: "&fПользователь &#FFB6C1%discord_tag% &fне найден на Discord-сервере. Сначала зайдите на сервер."
+discord_already_linked: "&fУ вас уже привязан Discord."
+discord_error: "&cОшибка при работе с Discord. Попробуйте позже."
+discord_bot_disabled: "&fПривязка Discord сейчас недоступна: Discord-бот отключён на сервере."
+discord_prompt_link: "&fЗа уровень &#FFB6C1%level% &fвыдаётся роль в Discord. Привяжите Discord: &#FFB6C1/boosty discord <ваш_юзернейм>"
 
-# /boosty admin
-error_use_admin: "&cНеверное использование команды администратора."
-admin_usage_unlink: "&fИспользование: &#FFB6C1/boosty admin unlink <игрок> [-s]"
+discord_code_pending: "&fКод уже отправлен в Discord. Введите его в чат или подождите, пока он истечёт."
+discord_code_sent: "&fКод подтверждения отправлен в ЛС Discord пользователю &#FFB6C1%discord_tag%&f. Введите его в чат."
+discord_code_ttl: "&fКод действителен &#FFB6C1%minutes% мин&f. Попыток ввода: &#FFB6C1%attempts%"
+discord_code_expired: "&fКод подтверждения истёк. Запросите новый: &#FFB6C1/boosty discord <юзернейм>"
+discord_code_wrong: "&fНеверный код. Осталось попыток: &#FFB6C1%attempts%"
+discord_attempts_left: "&fОсталось попыток: &#FFB6C1%attempts%"
+discord_attempts_exceeded: "&fПопытки закончились. Запросите новый код: &#FFB6C1/boosty discord <юзернейм>"
+discord_dm_failed: "&fНе удалось отправить код в ЛС &#FFB6C1%discord_tag%&f. Разрешите сообщения от участников сервера и попробуйте снова."
+
+discord_auto_linked: "&fПохоже, это ваш Discord: &#FFB6C1%discord_tag%&f. Роль будет выдана после подтверждения."
+discord_confirm_question: "&fЭто точно ваш аккаунт? "
+discord_confirm_yes: "&a&l[✔ Да]"
+discord_confirm_yes_hover: "&fПодтвердить: &#FFB6C1%discord_tag%\n&7Нажмите, чтобы привязать аккаунт и получить роль"
+discord_confirm_no: "&c&l[✖ Нет]"
+discord_confirm_no_hover: "&fЭто не мой аккаунт\n&7Роль выдана не будет, можно указать свой юзернейм"
+discord_confirm_done: "&fОтлично, аккаунт &#FFB6C1%discord_tag%&f привязан, роль выдана."
+discord_confirm_cancelled: "&fПонял, аккаунт &#FFB6C1%discord_tag%&f не ваш. Роль не выдана, привязка отменена."
+discord_confirm_nothing: "&fНет привязки Discord, ожидающей подтверждения."
+discord_change_button: "&#FFB6C1&l[✎ Указать свой Discord]"
+discord_change_hover: "&7Нажмите и допишите свой юзернейм Discord"
+
+reload_success: "&fКонфигурация перезагружена."
+reload_fail: "&cНе удалось перезагрузить конфигурацию. Проверьте консоль."
+
+admin_usage_unlink: "&fИспользование: &#FFB6C1/boosty admin unlink <игрок>"
 admin_usage_info: "&fИспользование: &#FFB6C1/boosty admin info <игрок>"
-admin_usage_forcelink: "&fИспользование: &#FFB6C1/boosty admin forcelink <игрок> <бусти_ник> <уровень> [-s]"
-admin_usage_setdiscord: "&fИспользование: &#FFB6C1/boosty admin setdiscord <игрок> <discord_username>"
-
-admin_player_not_found: "&cИгрок не найден в базе данных."
-admin_unlink_success: "&fАккаунт игрока &#FFB6C1%player% &fуспешно отвязан."
-
-admin_setdiscord_usage: "&fИспользование: &#FFB6C1/boosty admin setdiscord <игрок> <discord_username>"
-admin_setdiscord_success: "&fDiscord аккаунт для игрока &#FFB6C1%player% &fизменен на &#FFB6C1%discord%&f."
-
-#/boosty admin forcelink
-admin_forcelink_success: "&fАккаунт &#FFB6C1%boosty% &fпринудительно привязан к &#FFB6C1%player%&f."
-
-#/boosty admin forcesync
-admin_forcesync_started: "&fЗапуск &#FFB6C1принудительной &fсинхронизации всех игроков..."
-admin_forcesync_async: "&fПроцесс запущен &#FFB6C1асинхронно. &fПроверьте консоль для деталей."
-admin_forcesync_success: "&fПринудительная синхронизация базы успешно завершена."
-
-# notify
-admin_notify_unlinked: "&fАдминистратор &#FFB6C1%admin% &fотвязал ваш аккаунт Boosty."
-admin_notify_forcelinked: "&fАдминистратор &#FFB6C1%admin% &fпринудительно привязал вам аккаунт Boosty: &#FFB6C1%boosty%&f."
-
-# etc
-congratulation_message:
-  - "&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"
-  - " &fИгрок &#FFB6C1{nickname} &fпривязал Boosty!"
-  - " &fУровень подписки: &#FFB6C1{level_name}"
-  - "&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"
+admin_usage_forcelink: "&fИспользование: &#FFB6C1/boosty admin forcelink <игрок> <ник_boosty>"
+admin_usage_setdiscord: "&fИспользование: &#FFB6C1/boosty admin setdiscord <игрок> <юзернейм_discord>"
+admin_resolving_player: "&fИщу игрока, подождите..."
+admin_player_not_found: "&fИгрок &#FFB6C1%player% &fне найден в базе плагина."
+admin_unlink_success: "&fПривязка игрока &#FFB6C1%player% &fудалена."
+admin_forcelink_success: "&fИгрок &#FFB6C1%player% &fпривязан к аккаунту Boosty &#FFB6C1%boosty%&f."
+admin_setdiscord_success: "&fИгроку &#FFB6C1%player% &fзадан Discord &#FFB6C1%discord_tag%&f."
+admin_forcesync_started: "&fЗапускаю принудительную синхронизацию..."
+admin_forcesync_async: "&fСинхронизация выполняется в фоне, результат появится в консоли."
+admin_notify_unlinked: "&fАдминистратор &#FFB6C1%admin% &fснял вашу привязку Boosty."
+admin_notify_forcelinked: "&fАдминистратор &#FFB6C1%admin% &fпривязал ваш аккаунт к Boosty &#FFB6C1%boosty%&f."
 
 discord:
   role-given-embed:
     color: "#FFB6C1"
     title: "Выдача роли Discord"
-    description: "Роль **{role_name}** успешно выдана игроку **{player}**."
+    description: "Роль **%role%** успешно выдана игроку **%player%**."
     fields:
       - name: "Подписка"
-        value: "**{level_name}**"
+        value: "%level%"
         inline: true
       - name: "Аккаунт"
-        value: "{ping}"
+        value: "%mention%"
         inline: true
     footer: "elytrya | github.com/elytrya/boostybridge"
-
   role-removed-embed:
-    color: "#FF0000"
+    color: "#FFB6C1"
     title: "Снятие роли Discord"
-    description: "Роль **{role_name}** была удалена у игрока **{player}**."
+    description: "Роль **%role%** снята у игрока **%player%**."
     fields:
-      - name: "Причина"
-        value: "Окончание или изменение подписки"
-        inline: false
+      - name: "Подписка"
+        value: "%level%"
+        inline: true
       - name: "Аккаунт"
-        value: "{ping}"
+        value: "%mention%"
         inline: true
     footer: "elytrya | github.com/elytrya/boostybridge"
-
-# errors
-error_not_found: "&cНеизвестная команда или недостаточно прав."
-error_use_unlink: "&cИспользование: &#FFB6C1/boosty admin unlink <ник> [-s]"
-error_use_info: "&cИспользование: /boosty admin info <игрок>"
-error_use_forcelink: "&cИспользование: /boosty admin forcelink <игрок> <boosty_name>"

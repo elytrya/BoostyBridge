@@ -1,14 +1,19 @@
 main: onevnl.ru.elytrya.BoostyBridge
-version: b0.3
+version: r1.0
 name: BoostyBridge
 author: elytrya
 api-version: 1.21
 
 softdepend: [PlaceholderAPI]
 
+libraries:
+  - net.dv8tion:JDA:5.0.0-beta.20
+
 commands:
   boosty:
     description: /boosty help
+    usage: "/boosty help"
+    aliases: [bb, boostybridge]
 
 permissions:
   boosty.link:
@@ -33,7 +38,7 @@ permissions:
     description: /boosty admin forcelink - админ, привязка аккаунта
     default: op
   boosty.admin.forcesync:
-    description: /boosty admin forcesync - админ, синхорнизация
+    description: /boosty admin forcesync - админ, синхронизация
     default: op
   boosty.admin.setdiscord:
     description: "/boosty admin setdiscord - админ, сет дискорда"
@@ -54,4 +59,5 @@ permissions:
     children:
       boosty.link: true
       boosty.info: true
+      boosty.discord: true
       boosty.admin.*: true

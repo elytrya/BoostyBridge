@@ -86,7 +86,7 @@ public class BoostyDMManager {
         dataArray.add(block2);
 
         String jsonData = client.getGson().toJson(dataArray);
-        client.debug("Send message DATA: " + jsonData);
+        client.debug("Send message payload prepared (" + jsonData.length() + " chars)");
 
         String payload = "data=" + URLEncoder.encode(jsonData, StandardCharsets.UTF_8);
 
@@ -111,18 +111,18 @@ public class BoostyDMManager {
                 .thenApply(response -> {
                     client.debug("Send message → code: " + response.statusCode());
                     if (response.statusCode() != 200) {
-                        client.debug("Send message response body: " + response.body());
+                        client.debug("Send message failed with code " + response.statusCode());
                     }
                     return response.statusCode() == 200;
                 });
     }
 
     public CompletableFuture<Boolean> sendVerificationCode(String targetUserId, String code, String playerName) {
-        client.debug("DM verification → отправка кода '" + code + "' пользователю " + targetUserId + " (игрок: " + playerName + ")");
+        client.debug("DM verification → отправка кода пользователю " + targetUserId + " (игрок: " + playerName + ")");
 
         String template = client.getPlugin().getConfig()
                 .getString("dm_verification.message_template",
-                        "🔐 Код подтверждения привязки Minecraft-аккаунта:\n{code}\n\nИгрок на сервере: {player}\n\nНапишите этот код в чат сервера для завершения привязки.\nЕсли вы не инициировали привязку — проигнорируйте сообщение.");
+                        "🔐 Код подтверждения привязки Minecraft-аккаунта:\n{code}\n\nИгрок на сервере: {player}\n\nНапишите этот код в чат сервера для завершения привязки.\nЕсли вы не инициировали привязку - проигнорируйте сообщение.");
 
         String messageText = template
                 .replace("{code}", code)
